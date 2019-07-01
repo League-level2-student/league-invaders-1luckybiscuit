@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font instructFont;
 	Font deadFont;
 	Rocketship rocket = new Rocketship(250, 700, 50, 50);
+	ObjectManager raccoon = new ObjectManager(rocket);
 	GamePanel() {
 		time = new Timer(1000/60,this);
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -29,7 +30,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		
 	}
 	void updateGameState() {
-		rocket.update();
+		raccoon.update();
 	}
 	void updateEndState() {
 	
@@ -44,7 +45,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		sad.drawString("Press ENTER to start", 150, 500);
 	}
 	void drawGameState(Graphics boy) {
-		rocket.draw(boy);
+		raccoon.draw(boy);
 	}
 	void drawEndState(Graphics hours) {
 		hours.setFont(deadFont);
@@ -95,20 +96,32 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_UP) {
-			rocket.y-=rocket.speed;
+			rocket.up = true;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-			rocket.y+=rocket.speed;
+			rocket.down = true;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			rocket.x-=rocket.speed;
+			rocket.left = true;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			rocket.x+=rocket.speed;
+			rocket.right = true;
 		}
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_UP) {
+			rocket.up = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+			rocket.down = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			rocket.left = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rocket.right = false;
+		}
 	}
 }
