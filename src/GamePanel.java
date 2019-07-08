@@ -15,6 +15,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	int currentState = MENU_STATE;
+	boolean pewpew = true;;
 	Font titleFont;
 	Font instructFont;
 	Font deadFont;
@@ -31,6 +32,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	void updateGameState() {
 		raccoon.update();
+		raccoon.manageEnemies();
 	}
 	void updateEndState() {
 	
@@ -95,6 +97,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				currentState = 0;
 			}
 		}
+		if(pewpew) {
+			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+				raccoon.addProjectile(new Projectile(rocket.x + 20, rocket.y, 10, 10));
+				pewpew = false;
+			}
+		}
 		if(e.getKeyCode() == KeyEvent.VK_UP) {
 			rocket.up = true;
 		}
@@ -122,6 +130,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			rocket.right = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			pewpew = true;
 		}
 	}
 }
