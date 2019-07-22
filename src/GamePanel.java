@@ -19,8 +19,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font titleFont;
 	Font instructFont;
 	Font deadFont;
-	Rocketship rocket = new Rocketship(250, 700, 50, 50);
-	ObjectManager raccoon = new ObjectManager(rocket);
+	Rocketship rock = new Rocketship(250, 700, 50, 50);
+	ObjectManager raccoon = new ObjectManager(rock);
 	GamePanel() {
 		time = new Timer(1000/60,this);
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -33,6 +33,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		raccoon.update();
 		raccoon.manageEnemies();
+		raccoon.checkCollision();
+		raccoon.purgeObjects();
+		if(rock.isAlive == false) {
+			currentState = END_STATE;
+			rock = new Rocketship(250, 700, 50, 50);
+			raccoon = new ObjectManager(rock);
+		}
 	}
 	void updateEndState() {
 	
@@ -47,6 +54,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		sad.drawString("Press ENTER to start", 150, 500);
 	}
 	void drawGameState(Graphics boy) {
+		boy.drawString(Integer.toString(raccoon.score), 10, 10);
 		raccoon.draw(boy);
 	}
 	void drawEndState(Graphics hours) {
@@ -54,7 +62,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		hours.setColor(Color.BLACK);
 		hours.drawString("GAME OVER", 40, 300);
 		hours.setFont(instructFont);
-		hours.drawString("You killed " + "so many " + "enemies!", 120, 400);
+		hours.drawString("You killed " + raccoon.score + " enemies!", 120, 400);
 		hours.drawString("Press ENTER to restart", 140, 500);
 	}
 	@Override
@@ -99,37 +107,37 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if(pewpew) {
 			if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-				raccoon.addProjectile(new Projectile(rocket.x + 20, rocket.y, 10, 10));
+				raccoon.addProjectile(new Projectile(rock.x + 20, (int) rock.y, 10, 10));
 				pewpew = false;
 			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_UP) {
-			rocket.up = true;
+			rock.up = true;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-			rocket.down = true;
+			rock.down = true;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			rocket.left = true;
+			rock.left = true;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			rocket.right = true;
+			rock.right = true;
 		}
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getKeyCode() == KeyEvent.VK_UP) {
-			rocket.up = false;
+			rock.up = false;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-			rocket.down = false;
+			rock.down = false;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			rocket.left = false;
+			rock.left = false;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			rocket.right = false;
+			rock.right = false;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 			pewpew = true;

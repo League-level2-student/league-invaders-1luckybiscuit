@@ -8,6 +8,7 @@ public class Projectile extends GameObject {
 		// TODO Auto-generated constructor stub
 	}
 	void update() {
+		super.update();
 		y -= 5;
 		if(y<0) {
 			isAlive = false;
@@ -15,6 +16,6 @@ public class Projectile extends GameObject {
 	}
 	void draw(Graphics epic) {
 		epic.setColor(Color.RED);
-		epic.fillRect(x, y, width, height);
+		epic.fillRect(x, (int)y, width, height);
 	}
 }

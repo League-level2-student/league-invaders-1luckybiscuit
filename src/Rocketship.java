@@ -16,6 +16,7 @@ public class Rocketship extends GameObject {
 	}
 
 	void update() {
+		super.update();
 			if(up) {
 				y-=speed;
 			}
@@ -32,6 +33,6 @@ public class Rocketship extends GameObject {
 
 	void draw(Graphics epic) {
 		epic.setColor(Color.BLUE);
-		epic.fillRect(x, y, width, height);
+		epic.fillRect(x, (int)y, width, height);
 	}
 }

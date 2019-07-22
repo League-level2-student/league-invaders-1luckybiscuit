@@ -8,6 +8,7 @@ public class ObjectManager {
 	ArrayList<Alien> alienList = new ArrayList();
 	long enemyTime;
 	int enemyWait = 500;
+	int score = 0;
 	ObjectManager(Rocketship Apollo) {
 		rock = Apollo;
 	}
@@ -27,6 +28,23 @@ public class ObjectManager {
 		}
 		for(int i = 0;i < alienList.size();i++) {
 			alienList.get(i).draw(eh);
+		}
+	}
+	int getScore() {
+		return score;
+	}
+	void checkCollision() {
+		for(Alien a: alienList) {
+			if(rock.colBox.intersects(a.colBox)) {
+				rock.isAlive = false;
+			}
+			for(Projectile p: projectileList) {
+				if(a.colBox.intersects(p.colBox)) {
+					a.isAlive = false;
+					p.isAlive = false;
+					score++;
+				}
+			}
 		}
 	}
 	void addProjectile(Projectile vomit) {
