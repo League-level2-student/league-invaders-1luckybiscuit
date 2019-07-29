@@ -15,7 +15,6 @@ public class Projectile extends GameObject {
 		}
 	}
 	void draw(Graphics epic) {
-		epic.setColor(Color.RED);
-		epic.fillRect(x, (int)y, width, height);
+		epic.drawImage(GamePanel.bulletImg, x, (int) y, width, height, null);
 	}
 }

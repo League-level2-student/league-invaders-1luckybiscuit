@@ -7,7 +7,8 @@ public class ObjectManager {
 	ArrayList<Projectile> projectileList = new ArrayList();
 	ArrayList<Alien> alienList = new ArrayList();
 	long enemyTime;
-	int enemyWait = 500;
+	Random generator = new Random();
+	int enemyWait = generator.nextInt(5)*100;
 	int score = 0;
 	ObjectManager(Rocketship Apollo) {
 		rock = Apollo;
@@ -45,6 +46,9 @@ public class ObjectManager {
 					score++;
 				}
 			}
+			if(a.y > LeagueInvaders.HEIGHT) {
+				a.isAlive = false;
+			}
 		}
 	}
 	void addProjectile(Projectile vomit) {
@@ -55,8 +59,9 @@ public class ObjectManager {
 	}
 	void manageEnemies() {
 		if(System.currentTimeMillis() - enemyTime >= enemyWait) {
-			addAlien(new Alien(new Random().nextInt(LeagueInvaders.WIDTH), 0, 50, 50));
+			addAlien(new Alien(new Random().nextInt(LeagueInvaders.WIDTH), -100, 100, 100));
 			enemyTime = System.currentTimeMillis();
+			enemyWait = generator.nextInt(5)*100;
 		}
 	}
 	void purgeObjects() {

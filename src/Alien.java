@@ -16,7 +16,7 @@ public class Alien extends GameObject {
 	int genInt = generator.nextInt(10);
 	Alien(int ex, int wy, int widt, int heit) {
 		super(ex, wy, widt, heit);
-		pattern = 1;//generator.nextInt(4);
+		pattern = generator.nextInt(4);
 		Random speeder = new Random();
 		speed = (speeder.nextInt(5) + 1)*difficulty;
 		// TODO Auto-generated constructor stub
@@ -24,46 +24,49 @@ public class Alien extends GameObject {
 	int modX = x = x + genInt*speed;
 	void update() {
 		super.update();
-		if(pattern == 0) {
-			
-			y += speed;
-		}
-		if(pattern == 1) {
-			y = y * 1.03 + speed/2;
-		}
-		if(pattern == 2) {
-			if(counter == genInt) {
-				yPos = -yPos;
+		if(y<=0) {
+			y++;
+		}else {
+			if(pattern == 0) {
+				
+				y += speed;
 			}
-			if(counter == genInt*2) {
-				counter = 0;
-				xPos = -xPos;
+			if(pattern == 1) {
+				y = y * 1.03 + speed/3;
 			}
-			counter++;
-			y += speed*yPos + difficulty;
-			modX += speed*xPos;
-			x = modX;
-		}
-		if(pattern == 3) {
-			if(ccounter == genInt) {
-				ccounter = 0;
-				xxPos = -xxPos;
+			if(pattern == 2) {
+				if(counter == genInt) {
+					yPos = -yPos;
+				}
+				if(counter == genInt*2) {
+					counter = 0;
+					xPos = -xPos;
+				}
+				counter++;
+				y += speed*yPos + difficulty;
+				modX += speed*xPos;
+				x = modX;
 			}
-			ccounter++;
-			x += speed*2*xxPos;
-			y += difficulty;
-			
-		}
-		if(pattern == 4) {
-			if(cccounter == genInt+10) {
-				cccounter = 0;
-				y += 11*difficulty + genInt*difficulty;
+			if(pattern == 3) {
+				if(ccounter == genInt) {
+					ccounter = 0;
+					xxPos = -xxPos;
+				}
+				ccounter++;
+				x += speed*2*xxPos;
+				y += difficulty;
+				
 			}
-			cccounter++;
+			if(pattern == 4) {
+				if(cccounter == genInt+10) {
+					cccounter = 0;
+					y += 11*difficulty + genInt*difficulty;
+				}
+				cccounter++;
+			}
 		}
 	}
 	void draw(Graphics epic) {
-		epic.setColor(Color.YELLOW);
-		epic.fillRect(x, (int) y, width, height);
+		epic.drawImage(GamePanel.alienImg, x, (int) y, width, height, null);
 	}
 }

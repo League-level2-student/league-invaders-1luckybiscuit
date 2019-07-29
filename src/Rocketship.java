@@ -21,18 +21,23 @@ public class Rocketship extends GameObject {
 				y-=speed;
 			}
 			if(down) {
-				y+=speed;
+				if(y<LeagueInvaders.HEIGHT - this.height) {
+					y+=speed;
+				}
 			}
 			if(left) {
+				if(x>0) {
 				x-=speed;
+				}
 			}
 			if(right) {
-				x+=speed;
+				if(x<LeagueInvaders.WIDTH - this.width) {
+					x+=speed;
+				}
 			}
 	}
 
 	void draw(Graphics epic) {
-		epic.setColor(Color.BLUE);
-		epic.fillRect(x, (int)y, width, height);
+		epic.drawImage(GamePanel.rocketImg, x, (int)y, width, height, null);
 	}
 }
